@@ -29,7 +29,7 @@ $html = curl_exec($ch);
 
 curl_close($ch);
 
-//echo $html;
+echo $html;
 
 // Create a DOM parser object
 $dom = new DOMDocument();
