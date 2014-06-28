@@ -45,6 +45,10 @@ loadHTML might throw because of invalid HTML in the page.
 $xpath = new DOMXpath($dom);
 
 $handle = fopen($outputFile, "a");
+if ($handle == FALSE)
+{
+    echo "ERROR: Failed to open file!<br \>"
+}
 
 // get pv state
 $elements = $xpath->query($xPathPvState);
