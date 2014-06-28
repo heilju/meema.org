@@ -56,6 +56,7 @@ $elements = $xpath->query($xPathPvState);
 foreach ($elements as $element) {
     $pvState = trim($element->nodeValue);
 }
+echo "PV State: " . $pvState . "<br \>";
 
 if ($pvState =! "Aus")
 {
