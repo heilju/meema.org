@@ -45,7 +45,7 @@ $xpath = new DOMXpath($dom);
 $handle = fopen($outputFile, "a");
 if ($handle == FALSE)
 {
-    echo "ERROR: Failed to open file!<br \>"
+    echo "ERROR: Failed to open file!<br \>";
 }
 
 // get pv state
