@@ -55,6 +55,7 @@ foreach ($elements as $element) {
 
 if ($pvState =! "Aus")
 {
+    echo "IN";
     // get current power output
     $elements = $xpath->query($xpathCurrentOutput);
     echo $elements->length;
