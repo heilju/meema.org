@@ -17,7 +17,7 @@ $xpathTotalOutput = "/html/body/form/font/table[2]/tbody/tr[4]/td[6]";
 // XPath PV state
 $xPathPvState = "/html/body/form/font/table[2]/tr[8]/td[3]";
 
-$ch = curl_init();
+$ch = curl_init() or die ("ERROR: Could not initiate curl session!");
 
 curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);
 curl_setopt($ch, CURLOPT_URL, $url);
@@ -25,11 +25,9 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
 curl_setopt($ch, CURLOPT_VERBOSE, true);
 
-$html = curl_exec($ch);
+$html = curl_exec($ch) or die ("ERROR: Could not execute curl session!");
 
 curl_close($ch);
-
-echo $html;
 
 // Create a DOM parser object
 $dom = new DOMDocument();
