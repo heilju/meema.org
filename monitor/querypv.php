@@ -8,8 +8,7 @@ $password = "eTcJ0708=";
 $outputFile = "pvdata.csv";
 
 // XPath current power output (state: on)
-$xpathCurrentOutput = "/html/body/form/font/table[2]/tbody/tr[4]/td[3]"; //during state on
-//$xpathCurrentOutput = "/html/body/form/font/table[2]/tr[4]/td[3]"; //during state off
+$xpathCurrentOutput = "/html/body/form/font/table[2]/tr[4]/td[3]";
 
 // XPath total power output
 $xpathTotalOutput = "/html/body/form/font/table[2]/tbody/tr[4]/td[6]";
@@ -54,13 +53,14 @@ $elements = $xpath->query($xPathPvState);
 foreach ($elements as $element) {
     $pvState = trim($element->nodeValue);
 }
+//echo "DEBUG: pvState=" . $pvState . "<br \>";
 
-if ($pvState =! "Aus")
+if ($pvState != "Aus")
 {
-    echo "IN";
+    //echo "Marker: IN<br \>";
     // get current power output
     $elements = $xpath->query($xpathCurrentOutput);
-    echo $elements->length;
+    //echo "DEBUG: elements->length=" . $elements->length . "<br \>";
 
     foreach ($elements as $element) {
         fwrite($handle, date("Y-m-d H:i:s") . ";" . trim($element->nodeValue). "\r\n");
@@ -68,6 +68,7 @@ if ($pvState =! "Aus")
 }
 else
 {
+    //echo "IN_ELSE";
     // get current power output
     fwrite($handle, date("Y-m-d H:i:s") . ";0\r\n");
 
