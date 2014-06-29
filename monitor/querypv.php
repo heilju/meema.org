@@ -5,13 +5,17 @@ $timeout = 5;
 $username = "pvserver";
 $password = "eTcJ0708=";
 
-$outputFile = "pvdata.csv";
+$outputCurrentFile = "pvdata.csv";
+$outputTotalsFile = "pvdatatotals.csv";
 
 // XPath current power output (state: on)
 $xpathCurrentOutput = "/html/body/form/font/table[2]/tr[4]/td[3]";
 
+// XPath daily power output
+$xpathDailyOutput = "/html/body/form/font/table[2]/tr[6]/td[6]";
+
 // XPath total power output
-$xpathTotalOutput = "/html/body/form/font/table[2]/tbody/tr[4]/td[6]";
+$xpathTotalOutput = "/html/body/form/font/table[2]/tr[4]/td[6]";
 
 // XPath PV state
 $xPathPvState = "/html/body/form/font/table[2]/tr[8]/td[3]";
@@ -41,11 +45,18 @@ loadHTML might throw because of invalid HTML in the page.
 
 $xpath = new DOMXpath($dom);
 
-$handle = fopen($outputFile, "a");
-if ($handle == FALSE)
+$fh_current = fopen($outputCurrentFile, "a");
+if ($fh_current == FALSE)
 {
     echo "ERROR: Failed to open file!<br \>";
 }
+
+$fh_totals = fopen($outputTotalsFile, "a");
+if ($fh_totals == FALSE)
+{
+    echo "ERROR: Failed to open file!<br \>";
+}
+
 
 // get pv state
 $elements = $xpath->query($xPathPvState);
@@ -59,22 +70,45 @@ if ($pvState != "Aus")
 {
     //echo "Marker: IN<br \>";
     // get current power output
-    $elements = $xpath->query($xpathCurrentOutput);
-    //echo "DEBUG: elements->length=" . $elements->length . "<br \>";
+    $elementsCurrent = $xpath->query($xpathCurrentOutput);
+    //echo "DEBUG: elementsCurrent->length=" . $elementsCurrent->length . "<br \>";
 
-    foreach ($elements as $element) {
-        fwrite($handle, date("Y-m-d H:i:s") . ";" . trim($element->nodeValue). "\r\n");
+    foreach ($elementsCurrent as $elementCurrent) {
+        fwrite($fh_current, date("Y-m-d H:i:s") . ";" . trim($elementCurrent->nodeValue). "\r\n");
     }
+    
+    // get daily power output
+    $elementsDaily = $xpath->query($xpathDailyOutput);
+    //echo "DEBUG: elementsDaily->length=" . $elementsDaily->length . "<br \>";
+
+    foreach ($elementsDaily as $elementDaily) {
+         $dailyOutput = trim($elementDaily->nodeValue);
+    }
+    
+    // get total power output
+    $elementsTotal = $xpath->query($xpathTotalOutput);
+    //echo "DEBUG: elementsTotal->length=" . $elementsTotal->length . "<br \>";
+
+    foreach ($elementsTotal as $elementTotal) {
+         $totalOutput = trim($elementTotal->nodeValue);
+    }
+    
+    //echo "Total Output: " . $totalOutput . " kWh<br \>";
+    //echo "Daily Output: " . $dailyOutput . " kWh<br \>";
+    
+    fwrite($fh_totals, date("Y-m-d H:i:s") . ";" . $totalOutput . ";" . $dailyOutput . "\r\n");
+
 }
 else
 {
     //echo "IN_ELSE";
     // get current power output
-    fwrite($handle, date("Y-m-d H:i:s") . ";0\r\n");
+    fwrite($fh_current, date("Y-m-d H:i:s") . ";0\r\n");
 
 }
 
-fclose($handle);
+fclose($fh_current);
+fclose($fh_totals);
 
 /*
 // loop through all <td> tags and print XPath, Value and Node Type
@@ -83,6 +117,5 @@ $tds = $dom->getElementsByTagName('td');
 
 foreach ($tds as $td) {
     echo "Node Value:" . $td->nodeValue . ", Node Type:" . $td->nodeType . ", Node XPath:" . $td->getNodePath() . "<br \>";
-}
-*/
+}*/
 ?>

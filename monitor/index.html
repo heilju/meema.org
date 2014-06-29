@@ -18,13 +18,13 @@
     <![endif]-->
   </head>
   <body>
-    <h1>PV Weindlweg Energieproduktion</h1>
-        <div id="graphdiv" style="width: 900px; height: 400px;"></div>
+    <h1>PV Current Power Output</h1>
+        <div id="pvCurrentGraph" style="width: 900px; height: 400px;"></div>
         <script type="text/javascript">
           g = new Dygraph(
 
             // containing div
-            document.getElementById("graphdiv"),
+            document.getElementById("pvCurrentGraph"),
 
             // CSV or path to a CSV file.
             "pvdata.csv",
@@ -33,6 +33,24 @@
             }
           );
         </script>
+        
+    <h1>PV Total Power Output</h1>
+        <div id="pvTotalGraph" style="width: 900px; height: 400px;"></div>
+        <script type="text/javascript">
+          g = new Dygraph(
+
+            // containing div
+            document.getElementById("pvTotalGraph"),
+
+            // CSV or path to a CSV file.
+            "pvdatatotals.csv",
+            {
+                delimiter: ";"
+            }
+          );
+        </script>
+    <!-- Standard button -->
+    <button type="button" class="btn btn-default">Aktualisieren</button>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
