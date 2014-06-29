@@ -104,6 +104,26 @@ else
     //echo "IN_ELSE";
     // get current power output
     fwrite($fh_current, date("Y-m-d H:i:s") . ";0\r\n");
+    // get daily power output
+    $elementsDaily = $xpath->query($xpathDailyOutput);
+    //echo "DEBUG: elementsDaily->length=" . $elementsDaily->length . "<br \>";
+
+    foreach ($elementsDaily as $elementDaily) {
+         $dailyOutput = trim($elementDaily->nodeValue);
+    }
+    
+    // get total power output
+    $elementsTotal = $xpath->query($xpathTotalOutput);
+    //echo "DEBUG: elementsTotal->length=" . $elementsTotal->length . "<br \>";
+
+    foreach ($elementsTotal as $elementTotal) {
+         $totalOutput = trim($elementTotal->nodeValue);
+    }
+    
+    //echo "Total Output: " . $totalOutput . " kWh<br \>";
+    //echo "Daily Output: " . $dailyOutput . " kWh<br \>";
+    
+    fwrite($fh_totals, date("Y-m-d H:i:s") . ";" . $totalOutput . ";" . $dailyOutput . "\r\n");
 
 }
 
