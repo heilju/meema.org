@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,51 +9,60 @@
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <script type="text/javascript" src="js/dygraph-combined.js"></script>
-
+    <script type="text/javascript" src="js/canvasjs.min.js"></script
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
-  <body>
-    <h1>PV Current Power Output</h1>
-        <div id="pvCurrentGraph" style="width: 900px; height: 400px;"></div>
+</head>
+<body>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">PV Current Power Output</h3>
+            </div>
+            <div id="pvCurrentGraph" class="panel-body"></div>
+        </div>
         <script type="text/javascript">
-          g = new Dygraph(
+        g = new Dygraph(
 
-            // containing div
-            document.getElementById("pvCurrentGraph"),
+        // containing div
+        document.getElementById("pvCurrentGraph"),
 
-            // CSV or path to a CSV file.
-            "pvdata.csv",
-            {
-                delimiter: ";"
-            }
-          );
+        // CSV or path to a CSV file.
+        "pvdata.csv",
+        {
+            delimiter: ";"
+        }
+        );
         </script>
-        
-    <h1>PV Total Power Output</h1>
-        <div id="pvTotalGraph" style="width: 900px; height: 400px;"></div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">PV Total Power Output</h3>
+            </div>
+            <div id="pvTotalGraph" class="panel-body"></div>
+        </div>
         <script type="text/javascript">
-          g = new Dygraph(
+        g = new Dygraph(
 
-            // containing div
-            document.getElementById("pvTotalGraph"),
+        // containing div
+        document.getElementById("pvTotalGraph"),
 
-            // CSV or path to a CSV file.
-            "pvdatatotals.csv",
-            {
-                delimiter: ";"
-            }
-          );
+        // CSV or path to a CSV file.
+        "pvdatatotals.csv",
+        {
+            delimiter: ";"
+        }
+        );
         </script>
-    <!-- Standard button -->
-    <button type="button" class="btn btn-default">Aktualisieren</button>
+        <!-- Standard button -->
+        <button type="button" class="btn btn-default">Aktualisieren</button>
+    </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-  </body>
+</body>
 </html>
